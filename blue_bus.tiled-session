@@ -1,0 +1,51 @@
+{
+    "Map/SizeTest": {
+        "height": 4300,
+        "width": 2
+    },
+    "activeFile": "data/mapb.tmx",
+    "expandedProjectPaths": [
+        "."
+    ],
+    "fileStates": {
+        "data/mapb.tmx": {
+            "scale": 0.5,
+            "selectedLayer": 1,
+            "viewCenter": {
+                "x": 640,
+                "y": 623
+            }
+        },
+        "data/tmw_desert_spacing.tsx": {
+            "dynamicWrapping": false,
+            "scaleInDock": 1,
+            "scaleInEditor": 1.5
+        },
+        "data/towerDefense_tilesheet.tsx": {
+            "scaleInDock": 1,
+            "scaleInEditor": 0.75
+        }
+    },
+    "last.exportedFilePath": "//wsl.localhost/Ubuntu/home/bus-attack/bluebus/assets/levels",
+    "last.imagePath": "//wsl.localhost/Ubuntu/home/bus-attack/data/kenney_tower-defense-top-down/Tilesheet",
+    "map.height": 18,
+    "map.lastUsedExportFilter": "JSON map files (*.tmj *.json)",
+    "map.lastUsedFormat": "tmx",
+    "map.tileHeight": 50,
+    "map.tileWidth": 50,
+    "openFiles": [
+        "data/mapb.tmx",
+        "data/towerDefense_tilesheet.tsx"
+    ],
+    "project": "blue_bus.tiled-project",
+    "recentFiles": [
+        "data/towerDefense_tilesheet.tsx",
+        "data/mapb.tmx",
+        "data/tmw_desert_spacing.tsx"
+    ],
+    "tileset.lastUsedFormat": "tsx",
+    "tileset.tileSize": {
+        "height": 50,
+        "width": 50
+    }
+}
