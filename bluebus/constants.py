@@ -1,0 +1,4 @@
+# constants
+SCREEN_HEIGHT = 900
+SCREEN_WIDTH = 1500
+FPS = 60

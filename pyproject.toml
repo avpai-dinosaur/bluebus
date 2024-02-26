@@ -1,0 +1,18 @@
+[build-system]
+requires = ["setuptools>=64.0.0", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "bluebus"
+version = "1.0.0"
+dependencies = [
+    "pygame-ce",
+    "pathlib",
+]
+requires-python = ">=3.10"
+
+[tool.setuptools]
+packages = ["bluebus"]
+
+[tool.pylint."messages control"]
+disable = ["cyclic-import"]

@@ -1,0 +1,6 @@
+Metadata-Version: 2.1
+Name: bluebus
+Version: 1.0.0
+Requires-Python: >=3.10
+Requires-Dist: pygame-ce
+Requires-Dist: pathlib
