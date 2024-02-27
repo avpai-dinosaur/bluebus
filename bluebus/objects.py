@@ -4,7 +4,7 @@ import math
 import resources
 
 class World():
-    """Top level class to load games."""
+    """Top level class to load levels and maps."""
 
     def __init__(self, map):
         self.map = map
@@ -27,7 +27,7 @@ class World():
             self.bus_group.add(new_bus)
             self.enemies += 1
 
-    def create_turret(self, mouse_pos):
+    def spawn_turret(self, mouse_pos):
         new_turret = Turret("tower.png", mouse_pos)
         self.turret_group.add(new_turret)
 

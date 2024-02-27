@@ -39,12 +39,12 @@ while running:
     screen.fill("grey100")
 
     # poll for events
-    # pygame.QUIT event means the user clicked X to close your window
+    # pygame.QUIT event means the user clicked X to close window
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
             running = False
         if event.type == pygame.MOUSEBUTTONDOWN and event.button == pygame.BUTTON_LEFT:
-            world.create_turret(pygame.mouse.get_pos())
+            world.spawn_turret(resources.grid_snap(pygame.mouse.get_pos()))
             
     world.spawn_enemy()
     world.update()

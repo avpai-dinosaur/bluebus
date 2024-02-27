@@ -5,6 +5,8 @@
     },
     "activeFile": "data/mapb.tmx",
     "expandedProjectPaths": [
+        "bluebus",
+        "bluebus/assets",
         "."
     ],
     "fileStates": {
@@ -12,8 +14,8 @@
             "scale": 0.5,
             "selectedLayer": 1,
             "viewCenter": {
-                "x": 640,
-                "y": 623
+                "x": 668,
+                "y": 361
             }
         },
         "data/tmw_desert_spacing.tsx": {
