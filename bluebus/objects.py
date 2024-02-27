@@ -8,9 +8,29 @@ class World():
 
     def __init__(self, map):
         self.map = map
+        self.enemies = 0
+        self.bus_group = pygame.sprite.Group()
+        self.turret_group = pygame.sprite.Group()
     
+    def update(self):
+        self.bus_group.update()
+        self.turret_group.update()
+
     def draw(self, surface):
         surface.blit(self.map.image, (0, 0))
+        self.bus_group.draw(surface)
+        self.turret_group.draw(surface)
+    
+    def spawn_enemy(self):
+        if self.enemies == 0:
+            new_bus = Bus("bus.png", self.map.waypoints)
+            self.bus_group.add(new_bus)
+            self.enemies += 1
+
+    def create_turret(self, mouse_pos):
+        new_turret = Turret("tower.png", mouse_pos)
+        self.turret_group.add(new_turret)
+
 
 
 class Map(pygame.sprite.Sprite):
@@ -23,7 +43,6 @@ class Map(pygame.sprite.Sprite):
         self.map_data = map_data
         self.waypoints = []
         self.process_data()
-        print(self.waypoints)
 
     def process_data(self):
         """Processes json map_data and creates waypoint list"""
@@ -88,4 +107,8 @@ class Bus(pygame.sprite.Sprite):
 
 class Turret(pygame.sprite.Sprite):
     def __init__(self, filename, pos):
-        self.image, self.rect = resources.load_png(filename)
+        super().__init__()
+        self.original_image, self.rect = resources.load_png(filename)
+        self.image = self.original_image
+        self.pos = pos
+        self.rect.center = self.pos

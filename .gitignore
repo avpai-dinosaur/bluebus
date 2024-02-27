@@ -19,7 +19,7 @@ Icon
 
 # Python
 *.pyc
-__pycache__/
+*/__pycache__/*
 *.egg-info*
 dist/
 env/

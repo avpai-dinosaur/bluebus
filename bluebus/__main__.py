@@ -21,6 +21,7 @@ bus = objects.Bus("bus.png", map.waypoints)
 
 # initialize sprites
 bus_group = pygame.sprite.Group(bus)
+turret_group = pygame.sprite.Group()
 
 # draw everything to the screen
 world.draw(screen)
@@ -42,11 +43,13 @@ while running:
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
             running = False
-
+        if event.type == pygame.MOUSEBUTTONDOWN and event.button == pygame.BUTTON_LEFT:
+            world.create_turret(pygame.mouse.get_pos())
+            
+    world.spawn_enemy()
+    world.update()
     world.draw(screen)
-    bus_group.update()
-    bus_group.draw(screen)
-    map.draw_enemies_path()
+    # map.draw_enemies_path()
 
     # flip() the display to put your work on screen
     pygame.display.flip()
