@@ -5,10 +5,11 @@ import constants
 def grid_snap(coordinates_raw):
     row = coordinates_raw[1] // constants.TILE_SIZE
     col = coordinates_raw[0] // constants.TILE_SIZE
+    index = row * constants.COLS + col
     x_snapped = constants.TILE_SIZE * col + (constants.TILE_SIZE / 2)
     y_snapped = constants.TILE_SIZE * row + (constants.TILE_SIZE / 2)
     coordinates_snapped = (x_snapped, y_snapped)
-    return coordinates_snapped
+    return (index, coordinates_snapped)
 
 def init(screen_rect):
     """Initialize pygame."""

@@ -44,8 +44,10 @@ while running:
         if event.type == pygame.QUIT:
             running = False
         if event.type == pygame.MOUSEBUTTONDOWN and event.button == pygame.BUTTON_LEFT:
-            world.spawn_turret(resources.grid_snap(pygame.mouse.get_pos()))
-            
+            index, snapped_pos = resources.grid_snap(pygame.mouse.get_pos())
+            if (world.map.tile_data[index] == 342):
+                world.spawn_turret(snapped_pos)
+
     world.spawn_enemy()
     world.update()
     world.draw(screen)

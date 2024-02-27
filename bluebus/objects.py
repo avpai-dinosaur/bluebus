@@ -4,7 +4,7 @@ import math
 import resources
 
 class World():
-    """Top level class to load levels and maps."""
+    """Top level class to keep track of all game objects."""
 
     def __init__(self, map):
         self.map = map
@@ -32,7 +32,6 @@ class World():
         self.turret_group.add(new_turret)
 
 
-
 class Map(pygame.sprite.Sprite):
     """Represents a map in the game."""
 
@@ -41,13 +40,16 @@ class Map(pygame.sprite.Sprite):
         self.image, self.rect = resources.load_png(filename)
         self.area = pygame.display.get_surface().get_rect()
         self.map_data = map_data
+        self.tile_data = []
         self.waypoints = []
         self.process_data()
 
     def process_data(self):
         """Processes json map_data and creates waypoint list"""
         for layer in self.map_data["layers"]:
-            if layer["name"] == "waypoints":
+            if layer["name"] == "Tile Layer 1":
+                self.tile_data = layer["data"]
+            elif layer["name"] == "waypoints":
                 waypoint_data = layer["objects"][0]["polyline"]
                 self.process_waypoints(waypoint_data)
 
