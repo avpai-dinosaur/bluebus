@@ -1,13 +1,17 @@
 import pygame
 from pygame.math import Vector2
+from copy import copy
 import math
 import resources
+import constants
+
 
 class World():
     """Top level class to keep track of all game objects."""
 
     def __init__(self, map):
         self.map = map
+        self.menu = Menu("menu.png", (constants.SCREEN_WIDTH, 0))
         self.enemies = 0
         self.bus_group = pygame.sprite.Group()
         self.turret_group = pygame.sprite.Group()
@@ -18,6 +22,7 @@ class World():
 
     def draw(self, surface):
         surface.blit(self.map.image, (0, 0))
+        self.menu.draw(surface)
         self.bus_group.draw(surface)
         self.turret_group.draw(surface)
     
@@ -100,12 +105,13 @@ class Bus(pygame.sprite.Sprite):
             self.kill()
 
     def rotate(self):
-        distance = self.target - self.pos
         #use distance to calculate angle
+        distance = self.target - self.pos
         self.angle = math.degrees(math.atan2(-distance[1], distance[0]))
         self.image = pygame.transform.rotate(self.original_image, self.angle)
         self.rect = self.image.get_rect()
         self.rect.center = self.pos
+
 
 class Turret(pygame.sprite.Sprite):
     def __init__(self, filename, pos):
@@ -114,3 +120,57 @@ class Turret(pygame.sprite.Sprite):
         self.image = self.original_image
         self.pos = pos
         self.rect.center = self.pos
+
+
+class Menu():
+    def __init__(self, filename, pos):
+        self.image, self.rect = resources.load_png(filename)
+        self.pos = pos
+        self.rect.topleft = self.pos
+        self.buttons = [Button("tower-buy-button.png", (constants.SCREEN_WIDTH, constants.HEADER_HEIGHT))]
+        self.cancel_button = Button("cancel.png", (constants.SCREEN_WIDTH + 50, constants.HEADER_HEIGHT))
+        self.placing_turrets = False
+        self.clicked_button = None
+
+    def add_button(self, button):
+        self.buttons.append(button)
+
+    def draw(self, surface):
+        surface.blit(self.image, self.rect)
+        if self.placing_turrets:
+            if self.clicked_button:
+                cursor_pos = pygame.mouse.get_pos()
+                cursor_rect = self.clicked_button.image.get_rect()
+                cursor_rect.center = cursor_pos
+                if (cursor_pos[0] in range(0, constants.SCREEN_WIDTH) and
+                    cursor_pos[1] in range(0, constants.SCREEN_HEIGHT)):
+                    surface.blit(self.clicked_button.image, cursor_rect)
+            self.placing_turrets = not self.cancel_button.draw(surface)
+        else:
+            for button in self.buttons:
+                if button.draw(surface):
+                    self.placing_turrets = True
+                    self.clicked_button = copy(button)
+
+
+
+class Button():
+    def __init__(self, filename, pos, single_click=True):
+        self.image, self.rect = resources.load_png(filename)
+        self.pos = pos
+        self.rect.topleft = self.pos
+        self.clicked = False
+        self.single_click = single_click
+    
+    def draw(self, surface):
+        action = False
+        mouse_pos = pygame.mouse.get_pos()
+        if self.rect.collidepoint(mouse_pos):
+            if (pygame.mouse.get_pressed()[0]) and (not self.clicked):
+                action = True
+                if self.single_click:
+                    self.clicked = True
+            if not pygame.mouse.get_pressed()[0]:
+                self.clicked = False
+        surface.blit(self.image, self.rect)
+        return action

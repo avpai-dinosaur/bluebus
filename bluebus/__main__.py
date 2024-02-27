@@ -5,7 +5,7 @@ import resources
 import constants
 
 # initialize screen
-screen = resources.init(pygame.Rect(0, 0, constants.SCREEN_WIDTH, constants.SCREEN_HEIGHT))
+screen = resources.init(pygame.Rect(0, 0, constants.SCREEN_WIDTH + constants.SIDE_PANEL, constants.SCREEN_HEIGHT))
 
 # initialize map and load json data
 with open("bluebus/assets/levels/basic-level.tmj") as file:
@@ -35,8 +35,7 @@ running = True
 while running:
     clock.tick(constants.FPS)
 
-    # fill the screen with a color to wipe away anything from last frame
-    screen.fill("grey100")
+    ###----------UPDATING SECTION----------###
 
     # poll for events
     # pygame.QUIT event means the user clicked X to close window
@@ -44,15 +43,29 @@ while running:
         if event.type == pygame.QUIT:
             running = False
         if event.type == pygame.MOUSEBUTTONDOWN and event.button == pygame.BUTTON_LEFT:
-            index, snapped_pos = resources.grid_snap(pygame.mouse.get_pos())
-            if (world.map.tile_data[index] == 342):
-                world.spawn_turret(snapped_pos)
+            mouse_pos = pygame.mouse.get_pos()
+            if (mouse_pos[0] in range(0, constants.SCREEN_WIDTH) and 
+                mouse_pos[1] in range(0, constants.SCREEN_HEIGHT)):
+                # snap mouse click to the grid
+                index, snapped_pos = resources.grid_snap(mouse_pos)
 
+                # check that tile is not road
+                if (world.map.tile_data[index] == constants.BUILDABLE):
+                    is_occupied = False
+                    for turret in world.turret_group:
+                        if turret.pos == snapped_pos:
+                            is_occupied = True
+                    if not is_occupied and world.menu.placing_turrets:
+                        world.spawn_turret(snapped_pos)
     world.spawn_enemy()
     world.update()
+
+    ###----------DRAW SECTION----------###
+
+    # fill the screen with a color to wipe away anything from last frame
+    screen.fill("grey100")
     world.draw(screen)
     # map.draw_enemies_path()
-
-    # flip() the display to put your work on screen
     pygame.display.flip()
+
 pygame.quit()
