@@ -15,6 +15,7 @@ class World():
         self.enemies = 0
         self.bus_group = pygame.sprite.Group()
         self.turret_group = pygame.sprite.Group()
+        self.selected_turret = None
     
     def update(self):
         self.bus_group.update()
@@ -24,8 +25,33 @@ class World():
         surface.blit(self.map.image, (0, 0))
         self.menu.draw(surface)
         self.bus_group.draw(surface)
-        self.turret_group.draw(surface)
+        for turret in self.turret_group:
+            turret.draw(surface)
     
+    def handle_mouse_click(self, mouse_pos):
+        if (mouse_pos[0] in range(0, constants.SCREEN_WIDTH) and 
+                mouse_pos[1] in range(0, constants.SCREEN_HEIGHT)):
+                if self.menu.placing_turrets:
+                    self.spawn_turret(mouse_pos)
+                else:
+                    new_turret_selection = self.select_turret(mouse_pos)
+                    # if we actually clicked onto a turret
+                    if new_turret_selection:
+                        # if something is selected
+                        if self.selected_turret:
+                            # if it is a new turret compared to before, change
+                            if new_turret_selection != self.selected_turret:
+                                self.selected_turret.selected = False
+                                self.selected_turret = new_turret_selection
+                        else:
+                            self.selected_turret = new_turret_selection
+                    # if didn't click turret
+                    else:
+                        # if something was selected clear everything
+                        if self.selected_turret:
+                            self.selected_turret.selected = False
+                            self.selected_turret = None
+
     def spawn_enemy(self):
         if self.enemies == 0:
             new_bus = Bus("bus.png", self.map.waypoints)
@@ -33,8 +59,31 @@ class World():
             self.enemies += 1
 
     def spawn_turret(self, mouse_pos):
-        new_turret = Turret("tower.png", mouse_pos)
-        self.turret_group.add(new_turret)
+        # snap mouse click to the grid
+        index, snapped_pos = resources.grid_snap(mouse_pos)
+        # check that tile is not road
+        if (self.map.tile_data[index] == constants.BUILDABLE):
+            is_occupied = False
+            for turret in self.turret_group:
+                if turret.pos == snapped_pos:
+                    is_occupied = True
+            if not is_occupied and self.menu.placing_turrets:
+                new_turret = Turret("tower.png", snapped_pos)
+                self.turret_group.add(new_turret)
+                print("created turret", new_turret)
+    
+    def select_turret(self, mouse_pos):
+        tile_pos = (mouse_pos[0] // constants.COLS, mouse_pos[1] // constants.ROWS)
+        for turret in self.turret_group:
+            if tile_pos == turret.tile_pos:
+                if turret.selected:
+                    turret.selected = False
+                    return None
+                else:
+                    turret.selected = True
+                    return turret
+        return None
+
 
 
 class Map(pygame.sprite.Sprite):
@@ -119,7 +168,25 @@ class Turret(pygame.sprite.Sprite):
         self.original_image, self.rect = resources.load_png(filename)
         self.image = self.original_image
         self.pos = pos
+        self.tile_pos = (self.pos[0] // constants.COLS, self.pos[1] // constants.ROWS)
         self.rect.center = self.pos
+        self.selected = False
+
+        # Transparent Range background
+        self.range = 200
+        self.range_image = pygame.Surface((self.range * 2, self.range * 2))
+        self.range_image.fill((0, 0, 0))
+        self.range_image.set_colorkey((0, 0, 0))
+        pygame.draw.circle(self.range_image, "grey100", (self.range, self.range), self.range)
+        self.range_image.set_alpha(100)
+        self.range_rect = self.range_image.get_rect()
+        self.range_rect.center = self.rect.center
+    
+    def draw(self, surface):
+        if self.selected:
+            surface.blit(self.range_image, self.range_rect)
+        surface.blit(self.image, self.rect)
+
 
 
 class Menu():
@@ -151,7 +218,6 @@ class Menu():
                 if button.draw(surface):
                     self.placing_turrets = True
                     self.clicked_button = copy(button)
-
 
 
 class Button():

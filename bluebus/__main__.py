@@ -44,19 +44,8 @@ while running:
             running = False
         if event.type == pygame.MOUSEBUTTONDOWN and event.button == pygame.BUTTON_LEFT:
             mouse_pos = pygame.mouse.get_pos()
-            if (mouse_pos[0] in range(0, constants.SCREEN_WIDTH) and 
-                mouse_pos[1] in range(0, constants.SCREEN_HEIGHT)):
-                # snap mouse click to the grid
-                index, snapped_pos = resources.grid_snap(mouse_pos)
-
-                # check that tile is not road
-                if (world.map.tile_data[index] == constants.BUILDABLE):
-                    is_occupied = False
-                    for turret in world.turret_group:
-                        if turret.pos == snapped_pos:
-                            is_occupied = True
-                    if not is_occupied and world.menu.placing_turrets:
-                        world.spawn_turret(snapped_pos)
+            world.handle_mouse_click(mouse_pos)
+    
     world.spawn_enemy()
     world.update()
 
