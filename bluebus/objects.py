@@ -116,7 +116,7 @@ class Bus(pygame.sprite.Sprite):
         self.original_image, self.rect = resources.load_png(filename)
         self.image = self.original_image
         self.angle = 0
-        self.speed = 2
+        self.speed = 1
         self.waypoints = [Vector2(point) for point in waypoints]
         self.pos = self.waypoints[0]
         self.target_point = 1
@@ -163,6 +163,7 @@ class Turret(pygame.sprite.Sprite):
         self.update_time = pygame.time.get_ticks()
 
         # image stuff
+        self.angle = 180
         self.original_image = self.animation_list[self.frame_index]
         self.rect = self.original_image.get_rect()
         self.image = self.original_image
@@ -194,9 +195,12 @@ class Turret(pygame.sprite.Sprite):
         self.selected = False
 
     def update(self, enemy_group):
-        if (pygame.time.get_ticks() - self.last_shot) > self.cooldown:
-            self.play_animation()
-        self.pick_target(enemy_group)
+        if self.target:
+            if (pygame.time.get_ticks() - self.last_shot) > self.cooldown:
+                self.play_animation()
+        else:
+            if (pygame.time.get_ticks() - self.last_shot) > self.cooldown:
+                self.pick_target(enemy_group)
 
     def load_images(self):
         """Extract images from spritesheet."""
@@ -208,15 +212,19 @@ class Turret(pygame.sprite.Sprite):
         return animation_list
 
     def play_animation(self):
-        self.image = self.animation_list[self.frame_index]
+        self.original_image = self.animation_list[self.frame_index]
         if pygame.time.get_ticks()  - self.update_time > constants.ANIMATION_DELAY:
             self.update_time = pygame.time.get_ticks()
             self.frame_index += 1
             if self.frame_index >= len(self.animation_list):
                 self.frame_index = 0
                 self.last_shot = pygame.time.get_ticks()
+                self.target = None
 
     def draw(self, surface):
+        self.image = pygame.transform.rotate(self.original_image, self.angle - 180)
+        self.rect = self.image.get_rect()
+        self.rect.center = self.pos
         if self.selected:
             surface.blit(self.range_image, self.range_rect)
         surface.blit(self.image, self.rect)
@@ -230,7 +238,7 @@ class Turret(pygame.sprite.Sprite):
             dist = math.sqrt(x_dist ** 2 + y_dist ** 2)
             if dist < self.range:
                 self.target = enemy
-                print("target selected")
+                self.angle = math.degrees(math.atan2(-y_dist, x_dist))
 
 
 class Menu():
