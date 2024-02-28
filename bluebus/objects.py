@@ -19,7 +19,7 @@ class World():
     
     def update(self):
         self.bus_group.update()
-        self.turret_group.update()
+        self.turret_group.update(self.bus_group)
 
     def draw(self, surface):
         surface.blit(self.map.image, (0, 0))
@@ -155,28 +155,66 @@ class Bus(pygame.sprite.Sprite):
 class Turret(pygame.sprite.Sprite):
     def __init__(self, filename, pos):
         super().__init__()
+        
+        # image stuff
         self.original_image, self.rect = resources.load_png(filename)
         self.image = self.original_image
+
+        # positioning
         self.pos = pos
         self.tile_pos = (self.pos[0] // constants.COLS, self.pos[1] // constants.ROWS)
         self.rect.center = self.pos
-        self.selected = False
 
         # Transparent Range background
-        self.range = 200
+        self.init_range_background(200, pos)
+
+        #animation variables
+        self.sprite_sheet = None
+        self.animation_list = None
+        self.frame_index = 0
+        self.update_time = pygame.time.get_ticks()
+
+        # Target tracking
+        self.target = None
+
+        # Turret characteristics
+        self.cooldown = 1500
+        self.last_shot = pygame.time.get_ticks()
+
+    def init_range_background(self, range, pos):
+        self.range = range
         self.range_image = pygame.Surface((self.range * 2, self.range * 2))
         self.range_image.fill((0, 0, 0))
         self.range_image.set_colorkey((0, 0, 0))
         pygame.draw.circle(self.range_image, "grey100", (self.range, self.range), self.range)
         self.range_image.set_alpha(100)
         self.range_rect = self.range_image.get_rect()
-        self.range_rect.center = self.rect.center
-    
+        self.range_rect.center = pos
+        self.selected = False
+
+    def update(self, enemy_group):
+        if pygame.time.get_ticks() > self.cooldown:
+            self.play_animation()
+        self.pick_target(enemy_group)
+
+    def play_animation(self):
+        pass
+
     def draw(self, surface):
         if self.selected:
             surface.blit(self.range_image, self.range_rect)
         surface.blit(self.image, self.rect)
 
+    def pick_target(self, enemy_group):
+        x_dist = 0
+        y_dist = 0
+        for enemy in enemy_group:
+            x_dist = enemy.pos[0] - self.pos[0]
+            y_dist = enemy.pos[1] - self.pos[1]
+            dist = math.sqrt(x_dist ** 2 + y_dist ** 2)
+            if dist < self.range:
+                self.target = enemy
+                print("target selected")
 
 
 class Menu():
