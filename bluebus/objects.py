@@ -31,26 +31,11 @@ class World():
     def handle_mouse_click(self, mouse_pos):
         if (mouse_pos[0] in range(0, constants.SCREEN_WIDTH) and 
                 mouse_pos[1] in range(0, constants.SCREEN_HEIGHT)):
+                self.clear_selections()
                 if self.menu.placing_turrets:
                     self.spawn_turret(mouse_pos)
                 else:
-                    new_turret_selection = self.select_turret(mouse_pos)
-                    # if we actually clicked onto a turret
-                    if new_turret_selection:
-                        # if something is selected
-                        if self.selected_turret:
-                            # if it is a new turret compared to before, change
-                            if new_turret_selection != self.selected_turret:
-                                self.selected_turret.selected = False
-                                self.selected_turret = new_turret_selection
-                        else:
-                            self.selected_turret = new_turret_selection
-                    # if didn't click turret
-                    else:
-                        # if something was selected clear everything
-                        if self.selected_turret:
-                            self.selected_turret.selected = False
-                            self.selected_turret = None
+                    self.selected_turret = self.select_turret(mouse_pos)
 
     def spawn_enemy(self):
         if self.enemies == 0:
@@ -83,6 +68,11 @@ class World():
                     turret.selected = True
                     return turret
         return None
+
+    def clear_selections(self):
+        self.selected_turret = None
+        for turret in self.turret_group:
+            turret.selected = False
 
 
 
