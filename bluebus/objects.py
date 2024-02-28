@@ -53,7 +53,7 @@ class World():
                 if turret.pos == snapped_pos:
                     is_occupied = True
             if not is_occupied and self.menu.placing_turrets:
-                new_turret = Turret("tower.png", snapped_pos)
+                new_turret = Turret("nerd.png", snapped_pos)
                 self.turret_group.add(new_turret)
                 print("created turret", new_turret)
     
@@ -153,11 +153,18 @@ class Bus(pygame.sprite.Sprite):
 
 
 class Turret(pygame.sprite.Sprite):
-    def __init__(self, filename, pos):
+    def __init__(self, sprite_sheet, pos):
         super().__init__()
         
+        #animation variables
+        self.sprite_sheet, _ = resources.load_png(sprite_sheet)
+        self.animation_list = self.load_images()
+        self.frame_index = 0
+        self.update_time = pygame.time.get_ticks()
+
         # image stuff
-        self.original_image, self.rect = resources.load_png(filename)
+        self.original_image = self.animation_list[self.frame_index]
+        self.rect = self.original_image.get_rect()
         self.image = self.original_image
 
         # positioning
@@ -167,12 +174,6 @@ class Turret(pygame.sprite.Sprite):
 
         # Transparent Range background
         self.init_range_background(200, pos)
-
-        #animation variables
-        self.sprite_sheet = None
-        self.animation_list = None
-        self.frame_index = 0
-        self.update_time = pygame.time.get_ticks()
 
         # Target tracking
         self.target = None
@@ -193,12 +194,27 @@ class Turret(pygame.sprite.Sprite):
         self.selected = False
 
     def update(self, enemy_group):
-        if pygame.time.get_ticks() > self.cooldown:
+        if (pygame.time.get_ticks() - self.last_shot) > self.cooldown:
             self.play_animation()
         self.pick_target(enemy_group)
 
+    def load_images(self):
+        """Extract images from spritesheet."""
+        size = self.sprite_sheet.get_height()
+        animation_list = []
+        for frame in range(0, constants.ANIMATION_STEPS):
+            temp_img = self.sprite_sheet.subsurface(frame * size, 0, size, size)
+            animation_list.append(temp_img)
+        return animation_list
+
     def play_animation(self):
-        pass
+        self.image = self.animation_list[self.frame_index]
+        if pygame.time.get_ticks()  - self.update_time > constants.ANIMATION_DELAY:
+            self.update_time = pygame.time.get_ticks()
+            self.frame_index += 1
+            if self.frame_index >= len(self.animation_list):
+                self.frame_index = 0
+                self.last_shot = pygame.time.get_ticks()
 
     def draw(self, surface):
         if self.selected:

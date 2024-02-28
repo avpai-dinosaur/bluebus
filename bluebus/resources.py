@@ -13,7 +13,6 @@ def grid_snap(coordinates_raw):
 
 def init(screen_rect):
     """Initialize pygame."""
-    pygame.init()
     screen = pygame.display.set_mode(size=screen_rect.size)
     pygame.display.set_caption("BLUE BUS")
     pygame.mixer.pre_init(

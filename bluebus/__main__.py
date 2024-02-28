@@ -5,6 +5,7 @@ import resources
 import constants
 
 # initialize screen
+pygame.init()
 screen = resources.init(pygame.Rect(0, 0, constants.SCREEN_WIDTH + constants.SIDE_PANEL, constants.SCREEN_HEIGHT))
 
 # initialize map and load json data
