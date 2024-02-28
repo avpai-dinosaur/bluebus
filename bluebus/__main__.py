@@ -1,6 +1,8 @@
 import pygame
 import json
-import objects
+from world import World
+from bus import Bus
+from map import Map
 import resources
 import constants
 
@@ -11,14 +13,14 @@ screen = resources.init(pygame.Rect(0, 0, constants.SCREEN_WIDTH + constants.SID
 # initialize map and load json data
 with open("bluebus/assets/levels/basic-level.tmj") as file:
     map_data = json.load(file)
-map = objects.Map("basic-level.png", map_data)
+map = Map("basic-level.png", map_data)
 
 # initialize world
-world = objects.World(map)
+world = World(map)
 
 # initialize bus
 speed = 2.3
-bus = objects.Bus("bus.png", map.waypoints)
+bus = Bus("bus.png", map.waypoints)
 
 # initialize sprites
 bus_group = pygame.sprite.Group(bus)
