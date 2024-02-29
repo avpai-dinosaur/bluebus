@@ -1,6 +1,6 @@
 T_NERD = "nerd"
 T_JOCK = "jock"
-T_SCHISSEL = "schissel"
+T_SCHLISSEL = "schlissel"
 T_EMO = "emo"
 
 TURRET_DATA = {

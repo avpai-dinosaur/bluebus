@@ -11,7 +11,7 @@ class Menu():
         self.pos = pos
         self.rect.topleft = self.pos
         self.buttons = [Button("tower-buy-button.png", (constants.SCREEN_WIDTH, constants.HEADER_HEIGHT))]
-        self.cancel_button = Button("cancel.png", (constants.SCREEN_WIDTH + 50, constants.HEADER_HEIGHT))
+        self.cancel_button = Button("cancel.png", (constants.SCREEN_WIDTH + constants.SIDE_PANEL / 2, constants.SCREEN_HEIGHT / 2))
         self.placing_turrets = False
         self.clicked_button = None
 
