@@ -68,7 +68,7 @@ class World():
                 if turret.pos == snapped_pos:
                     is_occupied = True
             if not is_occupied and self.menu.placing_turrets:
-                new_turret = Turret(turret_data.T_SCHLISSEL, "schlissel.png", snapped_pos)
+                new_turret = Turret(turret_data.T_NERD, "nerd.png", snapped_pos)
                 self.turret_group.add(new_turret)
                 print("created turret", new_turret)
     

@@ -5,7 +5,7 @@ T_EMO = "emo"
 
 TURRET_DATA = {
     "nerd" : {
-        "bullet-img" : "",
+        "bullet-img" : "book.png",
         "bullet-speed" : 5,
         "anim-delay" : 50,
         "upgrades" : [
