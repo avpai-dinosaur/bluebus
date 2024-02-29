@@ -2,6 +2,7 @@ import pygame
 import math
 import resources
 import constants
+from bullet import Bullet
 
 
 class Turret(pygame.sprite.Sprite):
@@ -28,8 +29,10 @@ class Turret(pygame.sprite.Sprite):
         # Transparent Range background
         self.init_range_background(200, pos)
 
-        # Target tracking
+        # Target tracking and shooting
         self.target = None
+        self.bullet_group = pygame.sprite.Group()
+        self.just_shot = False
 
         # Turret characteristics
         self.cooldown = 1500
@@ -50,9 +53,15 @@ class Turret(pygame.sprite.Sprite):
         if self.target:
             if (pygame.time.get_ticks() - self.last_shot) > self.cooldown:
                 self.play_animation()
+                if (self.frame_index == 4) and (not self.just_shot):
+                    self.shoot_target()
+                    self.just_shot  = True
         else:
+            self.just_shot = False
             if (pygame.time.get_ticks() - self.last_shot) > self.cooldown:
                 self.pick_target(enemy_group)
+        for bullet in self.bullet_group:
+            bullet.update()
 
     def load_images(self):
         """Extract images from spritesheet."""
@@ -80,6 +89,7 @@ class Turret(pygame.sprite.Sprite):
         if self.selected:
             surface.blit(self.range_image, self.range_rect)
         surface.blit(self.image, self.rect)
+        self.bullet_group.draw(surface)
 
     def pick_target(self, enemy_group):
         x_dist = 0
@@ -91,3 +101,8 @@ class Turret(pygame.sprite.Sprite):
             if dist < self.range:
                 self.target = enemy
                 self.angle = math.degrees(math.atan2(-y_dist, x_dist))
+    
+    def shoot_target(self):
+        trajectory = pygame.Vector2((self.target.pos[0] - self.pos[0], self.target.pos[1] - self.pos[1]))
+        new_bullet = Bullet("football.png", self.pos, self, self.target, trajectory)
+        self.bullet_group.add(new_bullet)

@@ -20,6 +20,7 @@ class World():
         self.enemies = 0
         self.bus_group = pygame.sprite.Group()
         self.turret_group = pygame.sprite.Group()
+        self.bullet_group = pygame.sprite.Group()
         self.selected_turret = None
         self.last_enemy_spawn = None
     
@@ -66,7 +67,7 @@ class World():
                 if turret.pos == snapped_pos:
                     is_occupied = True
             if not is_occupied and self.menu.placing_turrets:
-                new_turret = Turret("nerd.png", snapped_pos)
+                new_turret = Turret("jock.png", snapped_pos)
                 self.turret_group.add(new_turret)
                 print("created turret", new_turret)
     
