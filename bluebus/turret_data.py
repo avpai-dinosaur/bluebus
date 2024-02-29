@@ -59,7 +59,7 @@ TURRET_DATA = {
     "schlissel" : {
         "bullet-img" : "lonely.png",
         "bullet-speed" : 10,
-        "anim-delay" : 1,
+        "anim-delay" : 50,
         "upgrades" : [
             # Level 1
             {
