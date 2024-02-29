@@ -11,16 +11,19 @@ TURRET_DATA = {
         "upgrades" : [
             # Level 1
             {
+                "damage" : 1,
                 "range" : 150,
                 "cooldown" : 1500
             },
             # Level 2
             {
+                "damage" : 2,
                 "range" : 200,
                 "cooldown" : 1200 
             },
             # Level 3
             {
+                "damage" : 3,
                 "range" : 250,
                 "cooldown" : 1000
             }
@@ -33,16 +36,19 @@ TURRET_DATA = {
         "upgrades" : [
             # Level 1
             {
+                "damage" : 5,
                 "range" : 250,
                 "cooldown" : 2000
             },
             # Level 2
             {
+                "damage" : 5,
                 "range" : 300,
                 "cooldown" : 2000
             },
             # Level 3
             {
+                "damage" : 5,
                 "range" : 500,
                 "cooldown" : 2000
             }
@@ -56,16 +62,19 @@ TURRET_DATA = {
         "upgrades" : [
             # Level 1
             {
+                "damage" : 1,
                 "range" : 400,
                 "cooldown" : 200
             },
             # Level 2
             {
+                "damage" : 4,
                 "range" : 500,
                 "cooldown" : 100
             },
             # Level 3
             {
+                "damage" : 8,
                 "range" : 700,
                 "cooldown" : 10
             }

@@ -4,11 +4,12 @@ import resources
 
 
 class Bullet(pygame.sprite.Sprite):
-    def __init__(self, filename, pos, owner, target):
+    def __init__(self, filename, pos, damage, owner, target):
         super().__init__()
         self.original_image, self.rect = resources.load_png(filename)
         self.pos = pygame.Vector2(pos)
         self.rect.center = self.pos
+        self.damage = damage
         self.owner = owner
         self.target = target
         
@@ -29,6 +30,7 @@ class Bullet(pygame.sprite.Sprite):
         y_dist = self.pos[1] - self.owner.pos[1]
         distance = math.sqrt(x_dist ** 2 + y_dist ** 2)
         if pygame.sprite.collide_circle(self.target, self):
+            self.target.health -= self.damage
             self.kill()
         elif distance > self.owner.range:
             self.kill()

@@ -19,13 +19,16 @@ class Bus(pygame.sprite.Sprite):
         self.target_point = 1
         self.rect.center = self.pos
         self.area = pygame.display.get_surface().get_rect()
+        self.health = 10
     
     def update(self):
         self.move()
         self.rotate()
 
     def move(self):
-        if self.target_point != len(self.waypoints):
+        if self.health <= 0:
+            self.kill()
+        elif self.target_point != len(self.waypoints):
             self.target = self.waypoints[self.target_point]
             self.movement = self.target - self.pos
 

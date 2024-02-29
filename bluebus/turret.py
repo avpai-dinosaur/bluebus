@@ -37,6 +37,7 @@ class Turret(pygame.sprite.Sprite):
         # Turret characteristics
         self.level = 0
         self.bullet_speed = self.data["bullet-speed"]
+        self.bullet_damage = self.data["upgrades"][self.level]["damage"]
         self.bullet_img_filename = self.data["bullet-img"]
         self.anim_delay = self.data["anim-delay"]
         self.cooldown = self.data["upgrades"][self.level]["cooldown"]
@@ -110,5 +111,5 @@ class Turret(pygame.sprite.Sprite):
                 self.angle = math.degrees(math.atan2(-y_dist, x_dist))
 
     def shoot_target(self):
-        new_bullet = Bullet(self.bullet_img_filename, self.pos, self, self.target)
+        new_bullet = Bullet(self.bullet_img_filename, self.pos, self.bullet_damage, self, self.target)
         self.bullet_group.add(new_bullet)
