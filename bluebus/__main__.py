@@ -49,7 +49,8 @@ while running:
             mouse_pos = pygame.mouse.get_pos()
             world.handle_mouse_click(mouse_pos)
     
-    world.spawn_enemy()
+    if world.menu.running_level:
+        world.run_level(2)
     world.update()
 
     ###----------DRAW SECTION----------###

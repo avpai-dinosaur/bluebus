@@ -18,7 +18,7 @@ class World():
     def __init__(self, map):
         self.map = map
         self.menu = Menu("menu.png", (constants.SCREEN_WIDTH, 0))
-        self.enemies = 0
+        self.spawned_enemies = 0
         self.bus_group = pygame.sprite.Group()
         self.turret_group = pygame.sprite.Group()
         self.bullet_group = pygame.sprite.Group()
@@ -51,12 +51,20 @@ class World():
                 new_bus = Bus("bus.png", self.map.waypoints)
                 self.bus_group.add(new_bus)
                 self.last_enemy_spawn = pygame.time.get_ticks()
-                self.enemies += 1
+                self.spawned_enemies += 1
         else:
             new_bus = Bus("bus.png", self.map.waypoints)
             self.bus_group.add(new_bus)
             self.last_enemy_spawn = pygame.time.get_ticks()
-            self.enemies += 1
+            self.spawned_enemies += 1
+
+    def run_level(self, num_enemies):
+        if self.spawned_enemies > num_enemies:
+            if len(self.bus_group.sprites()) == 0:
+                self.menu.running_level = False
+                self.spawned_enemies = 0
+        else:
+            self.spawn_enemy()
 
     def spawn_turret(self, mouse_pos):
         # snap mouse click to the grid

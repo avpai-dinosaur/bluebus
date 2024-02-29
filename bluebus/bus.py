@@ -22,13 +22,14 @@ class Bus(pygame.sprite.Sprite):
         self.health = 10
     
     def update(self):
-        self.move()
-        self.rotate()
-
-    def move(self):
         if self.health <= 0:
             self.kill()
-        elif self.target_point != len(self.waypoints):
+        else:
+            self.move()
+            self.rotate()
+
+    def move(self):
+        if self.target_point != len(self.waypoints):
             self.target = self.waypoints[self.target_point]
             self.movement = self.target - self.pos
 
