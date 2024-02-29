@@ -2,12 +2,15 @@ import pygame
 import math
 import resources
 import constants
+from turret_data import TURRET_DATA
 from bullet import Bullet
 
 
 class Turret(pygame.sprite.Sprite):
-    def __init__(self, sprite_sheet, pos):
+    def __init__(self, type, sprite_sheet, pos):
         super().__init__()
+        self.type = type
+        self.data = TURRET_DATA[self.type]
         
         #animation variables
         self.sprite_sheet, _ = resources.load_png(sprite_sheet)
@@ -16,7 +19,7 @@ class Turret(pygame.sprite.Sprite):
         self.update_time = pygame.time.get_ticks()
 
         # image stuff
-        self.angle = 270
+        self.angle = constants.TURRET_ANGLE_OFFSET
         self.original_image = self.animation_list[self.frame_index]
         self.rect = self.original_image.get_rect()
         self.image = self.original_image
@@ -26,17 +29,21 @@ class Turret(pygame.sprite.Sprite):
         self.tile_pos = (self.pos[0] // constants.COLS, self.pos[1] // constants.ROWS)
         self.rect.center = self.pos
 
-        # Transparent Range background
-        self.init_range_background(200, pos)
-
         # Target tracking and shooting
         self.target = None
         self.bullet_group = pygame.sprite.Group()
         self.just_shot = False
 
         # Turret characteristics
-        self.cooldown = 1500
+        self.level = 0
+        self.bullet_speed = self.data["bullet-speed"]
+        self.bullet_img_filename = self.data["bullet-img"]
+        self.anim_delay = self.data["anim-delay"]
+        self.cooldown = self.data["upgrades"][self.level]["cooldown"]
         self.last_shot = pygame.time.get_ticks()
+
+        # Transparent Range background
+        self.init_range_background(self.data["upgrades"][self.level]["range"], pos)
 
     def init_range_background(self, range, pos):
         self.range = range
@@ -74,7 +81,7 @@ class Turret(pygame.sprite.Sprite):
 
     def play_animation(self):
         self.original_image = self.animation_list[self.frame_index]
-        if pygame.time.get_ticks()  - self.update_time > constants.ANIMATION_DELAY:
+        if pygame.time.get_ticks()  - self.update_time > self.anim_delay:
             self.update_time = pygame.time.get_ticks()
             self.frame_index += 1
             if self.frame_index >= len(self.animation_list):
@@ -83,7 +90,7 @@ class Turret(pygame.sprite.Sprite):
                 self.target = None
 
     def draw(self, surface):
-        self.image = pygame.transform.rotate(self.original_image, self.angle - 270)
+        self.image = pygame.transform.rotate(self.original_image, self.angle - constants.TURRET_ANGLE_OFFSET)
         self.rect = self.image.get_rect()
         self.rect.center = self.pos
         if self.selected:
@@ -101,8 +108,7 @@ class Turret(pygame.sprite.Sprite):
             if dist < self.range:
                 self.target = enemy
                 self.angle = math.degrees(math.atan2(-y_dist, x_dist))
-    
+
     def shoot_target(self):
-        trajectory = pygame.Vector2((self.target.pos[0] - self.pos[0], self.target.pos[1] - self.pos[1]))
-        new_bullet = Bullet("football.png", self.pos, self, self.target, trajectory)
+        new_bullet = Bullet(self.bullet_img_filename, self.pos, self, self.target)
         self.bullet_group.add(new_bullet)

@@ -13,7 +13,7 @@ class Bus(pygame.sprite.Sprite):
         self.image = self.original_image
         self.angle = 0
         self.speed = 2
-        self.radius = 40
+        self.radius = 50
         self.waypoints = [Vector2(point) for point in waypoints]
         self.pos = self.waypoints[0]
         self.target_point = 1

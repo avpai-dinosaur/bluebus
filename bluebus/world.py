@@ -4,6 +4,7 @@ from copy import copy
 import math
 import resources
 import constants
+import turret_data
 from turret import Turret
 from bus import Bus
 from map import Map
@@ -67,7 +68,7 @@ class World():
                 if turret.pos == snapped_pos:
                     is_occupied = True
             if not is_occupied and self.menu.placing_turrets:
-                new_turret = Turret("jock.png", snapped_pos)
+                new_turret = Turret(turret_data.T_JOCK, "jock.png", snapped_pos)
                 self.turret_group.add(new_turret)
                 print("created turret", new_turret)
     
