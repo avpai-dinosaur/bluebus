@@ -2,6 +2,7 @@ T_NERD = "nerd"
 T_JOCK = "jock"
 T_SCHLISSEL = "schlissel"
 T_EMO = "emo"
+T_CANCEL = "cancel"
 
 TURRET_DATA = {
     "nerd" : {

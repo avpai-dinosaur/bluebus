@@ -7,13 +7,13 @@ from bullet import Bullet
 
 
 class Turret(pygame.sprite.Sprite):
-    def __init__(self, type, sprite_sheet, pos):
+    def __init__(self, type, pos):
         super().__init__()
         self.type = type
         self.data = TURRET_DATA[self.type]
         
         #animation variables
-        self.sprite_sheet, _ = resources.load_png(sprite_sheet)
+        self.sprite_sheet, _ = resources.load_png(self.type + ".png")
         self.animation_list = self.load_images()
         self.frame_index = 0
         self.update_time = pygame.time.get_ticks()

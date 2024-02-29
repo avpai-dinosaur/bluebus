@@ -68,9 +68,8 @@ class World():
                 if turret.pos == snapped_pos:
                     is_occupied = True
             if not is_occupied and self.menu.placing_turrets:
-                new_turret = Turret(turret_data.T_SCHLISSEL, "schlissel.png", snapped_pos)
+                new_turret = Turret(self.menu.clicked_button.type, snapped_pos)
                 self.turret_group.add(new_turret)
-                print("created turret", new_turret)
     
     def select_turret(self, mouse_pos):
         tile_pos = (mouse_pos[0] // constants.COLS, mouse_pos[1] // constants.ROWS)
