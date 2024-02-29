@@ -21,6 +21,7 @@ class World():
         self.bus_group = pygame.sprite.Group()
         self.turret_group = pygame.sprite.Group()
         self.selected_turret = None
+        self.last_enemy_spawn = None
     
     def update(self):
         self.bus_group.update()
@@ -43,9 +44,16 @@ class World():
                     self.selected_turret = self.select_turret(mouse_pos)
 
     def spawn_enemy(self):
-        if self.enemies == 0:
+        if self.last_enemy_spawn:
+            if (pygame.time.get_ticks() - self.last_enemy_spawn) > constants.SPAWN_COOLDOWN: 
+                new_bus = Bus("bus.png", self.map.waypoints)
+                self.bus_group.add(new_bus)
+                self.last_enemy_spawn = pygame.time.get_ticks()
+                self.enemies += 1
+        else:
             new_bus = Bus("bus.png", self.map.waypoints)
             self.bus_group.add(new_bus)
+            self.last_enemy_spawn = pygame.time.get_ticks()
             self.enemies += 1
 
     def spawn_turret(self, mouse_pos):

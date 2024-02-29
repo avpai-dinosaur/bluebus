@@ -18,3 +18,6 @@ FPS = 60
 # Turret constants
 ANIMATION_STEPS = 8
 ANIMATION_DELAY = 50
+
+# Enemy constants
+SPAWN_COOLDOWN = 5000
