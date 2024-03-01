@@ -36,6 +36,7 @@ class Turret(pygame.sprite.Sprite):
 
         # Turret characteristics
         self.level = 0
+        self.cost = self.data["upgrades"][self.level]["cost"]
         self.bullet_speed = self.data["bullet-speed"]
         self.bullet_damage = self.data["upgrades"][self.level]["damage"]
         self.bullet_img_filename = self.data["bullet-img"]

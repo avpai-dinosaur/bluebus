@@ -91,7 +91,9 @@ class World():
                     is_occupied = True
             if not is_occupied and self.menu.placing_turrets:
                 new_turret = Turret(self.menu.clicked_button.type, snapped_pos)
-                self.turret_group.add(new_turret)
+                if self.menu.money >= new_turret.cost:
+                    self.turret_group.add(new_turret)
+                    self.menu.money -= new_turret.cost
     
     def select_turret(self, mouse_pos):
         tile_pos = (mouse_pos[0] // constants.COLS, mouse_pos[1] // constants.ROWS)

@@ -13,6 +13,7 @@ TURRET_DATA = {
         "upgrades" : [
             # Level 1
             {
+                "cost" : 250,
                 "damage" : 1,
                 "range" : 150,
                 "cooldown" : 1500
@@ -38,6 +39,7 @@ TURRET_DATA = {
         "upgrades" : [
             # Level 1
             {
+                "cost" : 400,
                 "damage" : 5,
                 "range" : 250,
                 "cooldown" : 2000
@@ -64,6 +66,7 @@ TURRET_DATA = {
         "upgrades" : [
             # Level 1
             {
+                "cost" : 4000,
                 "damage" : 1,
                 "range" : 400,
                 "cooldown" : 200

@@ -23,6 +23,7 @@ class Bus(pygame.sprite.Sprite):
         self.speed = self.data["speed"]
         self.radius = 50
         self.health = self.data["health"]
+        self.money_return = self.health
 
         # waypoint following
         self.waypoints = [Vector2(point) for point in waypoints]
@@ -32,6 +33,7 @@ class Bus(pygame.sprite.Sprite):
     
     def update(self):
         if self.health <= 0:
+            self.world.menu.money += self.money_return
             self.kill()
         else:
             self.move()
