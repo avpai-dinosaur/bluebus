@@ -26,9 +26,9 @@ ENEMY_DATA = {
 ENEMY_SPAWN_DATA = [
     {
         #1
-        B_WEAK: 1,
+        B_WEAK: 5,
         B_MED: 0,
-        B_STRONG: 0,
+        B_STRONG: 2,
     },
     {
         #2

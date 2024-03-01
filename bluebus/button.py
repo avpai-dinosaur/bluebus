@@ -8,7 +8,7 @@ class Button():
         self.image = self.load_image(self.type + ".png")
         self.rect = self.image.get_rect()
         self.pos = pos
-        self.rect.topleft = self.pos
+        self.rect.center = self.pos
         self.clicked = False
         self.single_click = single_click
 

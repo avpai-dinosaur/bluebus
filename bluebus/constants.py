@@ -3,9 +3,13 @@ TILE_SIZE = 50 #(in px)
 ROWS = 18
 COLS = 30
 
+# Gameplay constants
+HEALTH = 100
+MONEY = 650
+
 # Menu Constants
 SIDE_PANEL = 300
-HEADER_HEIGHT = 110
+HEADER_HEIGHT = 100
 
 # Map constants
 BUILDABLE = 342
@@ -21,4 +25,4 @@ ANIMATION_DELAY = 50
 TURRET_ANGLE_OFFSET = 270
 
 # Enemy constants
-SPAWN_COOLDOWN = 5000
+SPAWN_COOLDOWN = 2500

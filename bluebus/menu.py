@@ -7,30 +7,43 @@ from button import Button
 
 
 class Menu():
+    """Represents in-game menu from which to buy/sell turrets and start levels."""
     def __init__(self, filename, pos):
+        # image stuff
         self.image, self.rect = resources.load_png(filename)
         self.pos = pos
         self.rect.topleft = self.pos
+
+        # fonts
+        self.text_font = pygame.font.SysFont("Consolas", 24, bold=True)
+        self.large_font = pygame.font.SysFont("Comic Sans MS", 36, bold=False)
+
+        # butons
         self.turret_buttons = self.load_turret_buttons()
         self.start_level_button = Button(turret_data.T_START, 
-                                         (constants.SCREEN_WIDTH + constants.SIDE_PANEL / 2, constants.SCREEN_HEIGHT - 300))
+                                         (constants.SCREEN_WIDTH + 50, constants.HEADER_HEIGHT + 550))
         self.cancel_button = Button(turret_data.T_CANCEL, 
                                     (constants.SCREEN_WIDTH + constants.SIDE_PANEL / 2, constants.SCREEN_HEIGHT / 2))
+        
+        # State variables
         self.placing_turrets = False
         self.running_level = False
         self.clicked_button = None
 
+        # Game info
+        self.health = constants.HEALTH
+        self.money = constants.MONEY
+
     def load_turret_buttons(self):
-        buttons = [Button(turret_data.T_NERD, (constants.SCREEN_WIDTH, constants.HEADER_HEIGHT)),
-                   Button(turret_data.T_JOCK, (constants.SCREEN_WIDTH + 50, constants.HEADER_HEIGHT)),
-                   Button(turret_data.T_SCHLISSEL, (constants.SCREEN_WIDTH + 100, constants.HEADER_HEIGHT))]
+        buttons = [Button(turret_data.T_NERD, (constants.SCREEN_WIDTH + 50, constants.HEADER_HEIGHT + 50)),
+                   Button(turret_data.T_JOCK, (constants.SCREEN_WIDTH + 150, constants.HEADER_HEIGHT + 50)),
+                   Button(turret_data.T_SCHLISSEL, (constants.SCREEN_WIDTH + 250, constants.HEADER_HEIGHT + 50))]
         return buttons
 
     def add_button(self, button):
         self.buttons.append(button)
 
-    def draw(self, surface):
-        surface.blit(self.image, self.rect)
+    def draw_buttons(self, surface):
         if self.placing_turrets:
             if self.clicked_button:
                 cursor_pos = pygame.mouse.get_pos()
@@ -49,3 +62,12 @@ class Menu():
                 if self.start_level_button.draw(surface):
                     self.running_level = True
                     print("Started a level")
+
+    def draw_text(self, surface, text, font, color, pos):
+        img = font.render(text, True, color)
+        surface.blit(img, pos)
+
+    def draw(self, surface):
+        surface.blit(self.image, self.rect)
+        self.draw_buttons(surface)
+        self.draw_text(surface, str(self.health), self.text_font, (0, 0, 0), (constants.SCREEN_WIDTH + 10, 10))
