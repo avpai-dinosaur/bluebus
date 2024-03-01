@@ -19,6 +19,7 @@ class World():
     def __init__(self, map):
         self.map = map
         self.menu = Menu("menu.png", (constants.SCREEN_WIDTH, 0))
+        self.level = 0
         self.spawned_enemies = 0
         self.bus_group = pygame.sprite.Group()
         self.turret_group = pygame.sprite.Group()
