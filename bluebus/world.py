@@ -19,7 +19,8 @@ class World():
     def __init__(self, map):
         self.map = map
         self.menu = Menu("menu.png", (constants.SCREEN_WIDTH, 0))
-        self.level = 0
+        self.level = 1
+        self.num_levels = len(enemy_data.ENEMY_SPAWN_DATA)
         self.spawned_enemies = 0
         self.bus_group = pygame.sprite.Group()
         self.turret_group = pygame.sprite.Group()
@@ -47,26 +48,37 @@ class World():
                 else:
                     self.selected_turret = self.select_turret(mouse_pos)
 
-    def spawn_enemy(self):
+    def spawn_enemy(self, enemy_type):
         if self.last_enemy_spawn:
             if (pygame.time.get_ticks() - self.last_enemy_spawn) > constants.SPAWN_COOLDOWN: 
-                new_bus = Bus(enemy_data.B_STRONG, self.map.waypoints)
+                new_bus = Bus(enemy_type, self.map.waypoints)
                 self.bus_group.add(new_bus)
                 self.last_enemy_spawn = pygame.time.get_ticks()
                 self.spawned_enemies += 1
         else:
-            new_bus = Bus(enemy_data.B_STRONG, self.map.waypoints)
+            new_bus = Bus(enemy_type, self.map.waypoints)
             self.bus_group.add(new_bus)
             self.last_enemy_spawn = pygame.time.get_ticks()
             self.spawned_enemies += 1
 
-    def run_level(self, num_enemies):
-        if self.spawned_enemies > num_enemies:
+    def process_enemy_list(self, spawn_dict):
+        enemies = []
+        for enemy_type in spawn_dict:
+            num_type = spawn_dict[enemy_type]
+            for _ in range(0, num_type):
+                enemies.append(enemy_type)
+        return enemies
+
+    def run_next_level(self):
+        spawn_list = self.process_enemy_list(enemy_data.ENEMY_SPAWN_DATA[self.level - 1])
+        num_enemies = len(spawn_list)
+        if self.spawned_enemies >= num_enemies:
             if len(self.bus_group.sprites()) == 0:
                 self.menu.running_level = False
                 self.spawned_enemies = 0
+                self.level += 1
         else:
-            self.spawn_enemy()
+            self.spawn_enemy(spawn_list[self.spawned_enemies])
 
     def spawn_turret(self, mouse_pos):
         # snap mouse click to the grid

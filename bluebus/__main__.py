@@ -41,8 +41,8 @@ while running:
             mouse_pos = pygame.mouse.get_pos()
             world.handle_mouse_click(mouse_pos)
     
-    if world.menu.running_level:
-        world.run_level(2)
+    if world.menu.running_level and world.level <= world.num_levels:
+        world.run_next_level()
     world.update()
 
     ###----------DRAW SECTION----------###
