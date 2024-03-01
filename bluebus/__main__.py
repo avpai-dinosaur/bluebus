@@ -18,14 +18,6 @@ map = Map("basic-level.png", map_data)
 # initialize world
 world = World(map)
 
-# initialize bus
-speed = 2.3
-bus = Bus("bus.png", map.waypoints)
-
-# initialize sprites
-bus_group = pygame.sprite.Group(bus)
-turret_group = pygame.sprite.Group()
-
 # draw everything to the screen
 world.draw(screen)
 pygame.display.flip()

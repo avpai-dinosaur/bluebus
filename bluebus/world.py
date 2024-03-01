@@ -5,6 +5,7 @@ import math
 import resources
 import constants
 import turret_data
+import enemy_data
 from turret import Turret
 from bus import Bus
 from map import Map
@@ -24,7 +25,7 @@ class World():
         self.bullet_group = pygame.sprite.Group()
         self.selected_turret = None
         self.last_enemy_spawn = None
-    
+
     def update(self):
         self.bus_group.update()
         self.turret_group.update(self.bus_group)
@@ -48,12 +49,12 @@ class World():
     def spawn_enemy(self):
         if self.last_enemy_spawn:
             if (pygame.time.get_ticks() - self.last_enemy_spawn) > constants.SPAWN_COOLDOWN: 
-                new_bus = Bus("bus.png", self.map.waypoints)
+                new_bus = Bus(enemy_data.B_STRONG, self.map.waypoints)
                 self.bus_group.add(new_bus)
                 self.last_enemy_spawn = pygame.time.get_ticks()
                 self.spawned_enemies += 1
         else:
-            new_bus = Bus("bus.png", self.map.waypoints)
+            new_bus = Bus(enemy_data.B_STRONG, self.map.waypoints)
             self.bus_group.add(new_bus)
             self.last_enemy_spawn = pygame.time.get_ticks()
             self.spawned_enemies += 1

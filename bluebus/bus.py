@@ -2,24 +2,32 @@ import pygame
 from pygame import Vector2
 import math
 import resources
+import enemy_data
 
 
 class Bus(pygame.sprite.Sprite):
     """Represents a bus."""
 
-    def __init__(self, filename, waypoints):
+    def __init__(self, type, waypoints):
         super().__init__()
-        self.original_image, self.rect = resources.load_png(filename)
+        self.type = type
+        self.data = enemy_data.ENEMY_DATA[self.type]
+
+        # image stuff
+        self.original_image, self.rect = resources.load_png(self.data["img"])
         self.image = self.original_image
         self.angle = 0
-        self.speed = 2
+
+        # bus characteristics
+        self.speed = self.data["speed"]
         self.radius = 50
+        self.health = self.data["health"]
+
+        # waypoint following
         self.waypoints = [Vector2(point) for point in waypoints]
         self.pos = self.waypoints[0]
         self.target_point = 1
         self.rect.center = self.pos
-        self.area = pygame.display.get_surface().get_rect()
-        self.health = 10
     
     def update(self):
         if self.health <= 0:
