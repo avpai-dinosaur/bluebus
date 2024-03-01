@@ -51,12 +51,12 @@ class World():
     def spawn_enemy(self, enemy_type):
         if self.last_enemy_spawn:
             if (pygame.time.get_ticks() - self.last_enemy_spawn) > constants.SPAWN_COOLDOWN: 
-                new_bus = Bus(enemy_type, self.map.waypoints)
+                new_bus = Bus(self, enemy_type, self.map.waypoints)
                 self.bus_group.add(new_bus)
                 self.last_enemy_spawn = pygame.time.get_ticks()
                 self.spawned_enemies += 1
         else:
-            new_bus = Bus(enemy_type, self.map.waypoints)
+            new_bus = Bus(self, enemy_type, self.map.waypoints)
             self.bus_group.add(new_bus)
             self.last_enemy_spawn = pygame.time.get_ticks()
             self.spawned_enemies += 1

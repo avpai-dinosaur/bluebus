@@ -70,4 +70,5 @@ class Menu():
     def draw(self, surface):
         surface.blit(self.image, self.rect)
         self.draw_buttons(surface)
-        self.draw_text(surface, str(self.health), self.text_font, (0, 0, 0), (constants.SCREEN_WIDTH + 10, 10))
+        self.draw_text(surface, str(self.health), self.text_font, (0, 0, 0), (constants.SCREEN_WIDTH + 50, 15))
+        self.draw_text(surface, str(self.money), self.text_font, (0, 0, 0), (constants.SCREEN_WIDTH + 50, 60))

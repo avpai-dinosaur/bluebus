@@ -8,8 +8,9 @@ import enemy_data
 class Bus(pygame.sprite.Sprite):
     """Represents a bus."""
 
-    def __init__(self, type, waypoints):
+    def __init__(self, world, type, waypoints):
         super().__init__()
+        self.world = world
         self.type = type
         self.data = enemy_data.ENEMY_DATA[self.type]
 
@@ -50,6 +51,7 @@ class Bus(pygame.sprite.Sprite):
                     self.pos += self.movement.normalize() * distance
                 self.target_point += 1
         else:
+            self.world.menu.health -= self.health
             self.kill()
 
     def rotate(self):
