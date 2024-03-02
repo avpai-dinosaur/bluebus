@@ -17,7 +17,7 @@ ENEMY_DATA = {
     },
     B_STRONG : {
         "img" : "bus3.png",
-        "speed" : 1,
+        "speed" : 2,
         "health" : 15,
         "anim-delay" : 50
     }

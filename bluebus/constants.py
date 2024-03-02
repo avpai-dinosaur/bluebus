@@ -21,7 +21,7 @@ FPS = 60
 
 # Turret constants
 ANIMATION_STEPS = 8
-ANIMATION_DELAY = 50
+ANIMATION_DELAY = 200
 TURRET_ANGLE_OFFSET = 270
 
 # Enemy constants

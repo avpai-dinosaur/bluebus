@@ -39,3 +39,11 @@ def load_png(name):
         print(f"Cannot load image: {fullname}")
         raise SystemExit
     return image, image.get_rect()
+
+def load_animation(sprite_sheet, x_size, y_size):
+    """Extract images from spritesheet."""
+    animation_list = []
+    for frame in range(0, constants.ANIMATION_STEPS):
+        temp_img = sprite_sheet.subsurface(frame * x_size, 0, x_size, y_size)
+        animation_list.append(temp_img)
+    return animation_list

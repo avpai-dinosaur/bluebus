@@ -1,6 +1,7 @@
 import pygame
 from pygame import Vector2
 import math
+import constants
 import resources
 import enemy_data
 
@@ -14,8 +15,17 @@ class Bus(pygame.sprite.Sprite):
         self.type = type
         self.data = enemy_data.ENEMY_DATA[self.type]
 
+        #animation variables
+        self.sprite_sheet, _ = resources.load_png(self.data["img"])
+        self.animation_list = resources.load_animation(self.sprite_sheet, 
+                                                       self.sprite_sheet.get_height() * 2,
+                                                       self.sprite_sheet.get_height())
+        self.frame_index = 0
+        self.update_time = pygame.time.get_ticks()
+
         # image stuff
-        self.original_image, self.rect = resources.load_png(self.data["img"])
+        self.original_image = self.animation_list[self.frame_index]
+        self.rect = self.original_image.get_rect()
         self.image = self.original_image
         self.angle = 0
 
@@ -36,6 +46,7 @@ class Bus(pygame.sprite.Sprite):
             self.world.menu.money += self.money_return
             self.kill()
         else:
+            self.play_animation()
             self.move()
             self.rotate()
 
@@ -63,3 +74,11 @@ class Bus(pygame.sprite.Sprite):
         self.image = pygame.transform.rotate(self.original_image, self.angle)
         self.rect = self.image.get_rect()
         self.rect.center = self.pos
+    
+    def play_animation(self):
+        self.original_image = self.animation_list[self.frame_index]
+        if pygame.time.get_ticks()  - self.update_time > constants.ANIMATION_DELAY:
+            self.update_time = pygame.time.get_ticks()
+            self.frame_index += 1
+            if self.frame_index >= len(self.animation_list):
+                self.frame_index = 0

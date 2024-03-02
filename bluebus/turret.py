@@ -14,7 +14,9 @@ class Turret(pygame.sprite.Sprite):
         
         #animation variables
         self.sprite_sheet, _ = resources.load_png(self.type + ".png")
-        self.animation_list = self.load_images()
+        self.animation_list = resources.load_animation(self.sprite_sheet, 
+                                                       self.sprite_sheet.get_height(), 
+                                                       self.sprite_sheet.get_height())
         self.frame_index = 0
         self.update_time = pygame.time.get_ticks()
 
@@ -71,15 +73,6 @@ class Turret(pygame.sprite.Sprite):
                 self.pick_target(enemy_group)
         for bullet in self.bullet_group:
             bullet.update()
-
-    def load_images(self):
-        """Extract images from spritesheet."""
-        size = self.sprite_sheet.get_height()
-        animation_list = []
-        for frame in range(0, constants.ANIMATION_STEPS):
-            temp_img = self.sprite_sheet.subsurface(frame * size, 0, size, size)
-            animation_list.append(temp_img)
-        return animation_list
 
     def play_animation(self):
         self.original_image = self.animation_list[self.frame_index]
