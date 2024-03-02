@@ -62,7 +62,6 @@ class Menu():
             if not self.running_level:
                 if self.start_level_button.draw(surface):
                     self.running_level = True
-                    print("Started a level")
 
     def draw_text(self, surface, text, font, color, pos):
         img = font.render(text, True, color)

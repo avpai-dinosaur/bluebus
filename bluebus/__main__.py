@@ -47,6 +47,9 @@ while running:
         if world.menu.health <= 0:
             world.game_over = True
             world.game_outcome = -1
+        elif world.menu.level > world.num_levels:
+            world.game_over = True
+            world.game_outcome = 1
 
     # fill the screen with a color to wipe away anything from last frame
     screen.fill("grey100")

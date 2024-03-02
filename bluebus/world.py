@@ -21,6 +21,7 @@ class World():
         self.map = map
         self.menu = Menu("menu.png", (constants.SCREEN_WIDTH, 0))
         self.game_over_img, _ = resources.load_png("game-over.png")
+        self.win_img, _ = resources.load_png("win.png")
 
         # level info
         self.num_levels = len(enemy_data.ENEMY_SPAWN_DATA)
@@ -47,8 +48,11 @@ class World():
         self.bus_group.draw(surface)
         for turret in self.turret_group:
             turret.draw(surface)
-        if self.game_outcome == -1:
-            surface.blit(self.game_over_img, (constants.SCREEN_WIDTH / 4, constants.SCREEN_HEIGHT / 4))
+        if self.game_over:
+            if self.game_outcome == -1:
+                surface.blit(self.game_over_img, (constants.SCREEN_WIDTH / 4, constants.SCREEN_HEIGHT / 4))
+            elif self.game_outcome == 1:
+                surface.blit(self.win_img, (constants.SCREEN_WIDTH / 4, constants.SCREEN_HEIGHT / 4))
     
     def handle_mouse_click(self, mouse_pos):
         if (mouse_pos[0] in range(0, constants.SCREEN_WIDTH) and 
