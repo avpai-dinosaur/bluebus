@@ -43,14 +43,27 @@ class Menu():
                    Button(turret_data.T_SCHLISSEL, (constants.SCREEN_WIDTH + 250, constants.HEADER_HEIGHT + 50))]
         return buttons
 
+    def create_turret_range_image(self, range):
+        range_img = pygame.Surface((range * 2, range * 2))
+        range_img.fill((0, 0, 0))
+        range_img.set_colorkey((0, 0, 0))
+        pygame.draw.circle(range_img, "grey100", (range, range), range)
+        range_img.set_alpha(100)
+        range_rect = range_img.get_rect()
+        return (range_img, range_rect)
+
     def draw_buttons(self, surface):
         if self.placing_turrets:
             if self.clicked_button:
                 cursor_pos = pygame.mouse.get_pos()
                 cursor_rect = self.clicked_button.image.get_rect()
                 cursor_rect.center = cursor_pos
+                turret_range = turret_data.TURRET_DATA[self.clicked_button.type]["upgrades"][0]["range"]
+                range_img, range_rect = self.create_turret_range_image(turret_range)
                 if (cursor_pos[0] in range(0, constants.SCREEN_WIDTH) and
                     cursor_pos[1] in range(0, constants.SCREEN_HEIGHT)):
+                    range_rect.center = cursor_pos
+                    surface.blit(range_img, range_rect)
                     surface.blit(self.clicked_button.image, cursor_rect)
             self.placing_turrets = not self.cancel_button.draw(surface)
         else:

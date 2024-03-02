@@ -4,7 +4,7 @@ ROWS = 18
 COLS = 30
 
 # Gameplay constants
-HEALTH = 1
+HEALTH = 100
 MONEY = 650
 
 # Menu Constants
