@@ -23,7 +23,7 @@ class Menu():
         self.start_level_button = Button(constants.B_START, 
                                          (constants.SCREEN_WIDTH + 50, constants.HEADER_HEIGHT + 550))
         self.cancel_button = Button(constants.B_CANCEL, 
-                                    (constants.SCREEN_WIDTH + constants.SIDE_PANEL / 2, constants.SCREEN_HEIGHT / 2))
+                                    (constants.SCREEN_WIDTH + 250, constants.HEADER_HEIGHT + 550))
         self.restart_button = Button(constants.B_RESTART, 
                                      (constants.SCREEN_WIDTH + constants.SIDE_PANEL / 2, constants.SCREEN_HEIGHT / 2))
         
@@ -31,6 +31,7 @@ class Menu():
         self.placing_turrets = False
         self.running_level = False
         self.clicked_button = None
+        self.hovered_button = None
 
         # Game info
         self.health = constants.HEALTH
@@ -54,6 +55,8 @@ class Menu():
 
     def draw_buttons(self, surface):
         if self.placing_turrets:
+            for button in self.turret_buttons:
+                button.draw(surface)
             if self.clicked_button:
                 cursor_pos = pygame.mouse.get_pos()
                 cursor_rect = self.clicked_button.image.get_rect()
@@ -65,19 +68,24 @@ class Menu():
                     range_rect.center = cursor_pos
                     surface.blit(range_img, range_rect)
                     surface.blit(self.clicked_button.image, cursor_rect)
-            self.placing_turrets = not self.cancel_button.draw(surface)
+            self.placing_turrets = not self.cancel_button.draw(surface)[0]
         else:
             for button in self.turret_buttons:
-                if button.draw(surface):
+                if button.draw(surface)[0]:
                     self.placing_turrets = True
                     self.clicked_button = copy(button)
+                elif button.draw(surface)[1]:
+                    self.hovered_button = copy(button)
             if not self.running_level:
-                if self.start_level_button.draw(surface):
+                if self.start_level_button.draw(surface)[0]:
                     self.running_level = True
 
     def draw_text(self, surface, text, font, color, pos):
         img = font.render(text, True, color)
         surface.blit(img, pos)
+
+    def draw_tower_info(self, surface, type, font, color, pos):
+        self.draw_text(surface, str(type), font, color, pos)
 
     def draw(self, surface):
         surface.blit(self.image, self.rect)
@@ -86,3 +94,5 @@ class Menu():
         self.draw_text(surface, str(self.money), self.text_font, (0, 0, 0), (constants.SCREEN_WIDTH + 50, 60))
         self.draw_text(surface, str(self.level), self.large_font, (0, 0, 0), 
                        (constants.SCREEN_WIDTH + 140, constants.HEADER_HEIGHT + 530))
+        if self.hovered_button:
+            self.draw_tower_info(surface, self.hovered_button.type, self.text_font, (0, 0, 0), (constants.SCREEN_WIDTH + 10, constants.HEADER_HEIGHT + 210))

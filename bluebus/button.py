@@ -21,6 +21,7 @@ class Button():
     
     def draw(self, surface):
         action = False
+        hovered = False
         mouse_pos = pygame.mouse.get_pos()
         if self.rect.collidepoint(mouse_pos):
             if (pygame.mouse.get_pressed()[0]) and (not self.clicked):
@@ -28,6 +29,7 @@ class Button():
                 if self.single_click:
                     self.clicked = True
             if not pygame.mouse.get_pressed()[0]:
+                hovered = True
                 self.clicked = False
         surface.blit(self.image, self.rect)
-        return action
+        return (action, hovered)
