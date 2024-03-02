@@ -61,7 +61,7 @@ class World():
         surface.blit(self.map.image, (0, 0))
         self.menu.draw(surface)
         if self.game_over:
-            if self.menu.restart_button.draw(surface):
+            if self.menu.restart_button.draw(surface)[0]:
                 print("restart game")
                 self.reset()
         self.bus_group.draw(surface)

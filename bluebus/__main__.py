@@ -11,9 +11,9 @@ pygame.init()
 screen = resources.init(pygame.Rect(0, 0, constants.SCREEN_WIDTH + constants.SIDE_PANEL, constants.SCREEN_HEIGHT))
 
 # initialize map and load json data
-with open("bluebus/assets/levels/basic-level.tmj") as file:
+with open("bluebus/assets/levels/purple-road.tmj") as file:
     map_data = json.load(file)
-map = Map("basic-level.png", map_data)
+map = Map("purple-road.png", map_data)
 
 # initialize world
 world = World(map)

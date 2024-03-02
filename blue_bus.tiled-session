@@ -3,20 +3,38 @@
         "height": 4300,
         "width": 2
     },
-    "activeFile": "data/mapb.tmx",
+    "activeFile": "data/map.tmx",
     "expandedProjectPaths": [
+        "data",
         "bluebus",
-        "bluebus/assets",
-        "."
+        ".",
+        "bluebus/assets"
     ],
+    "file.lastUsedOpenFilter": "All Files (*)",
     "fileStates": {
+        "data/map.tmx": {
+            "scale": 0.75,
+            "selectedLayer": 0,
+            "viewCenter": {
+                "x": 736.6666666666665,
+                "y": 469.99999999999994
+            }
+        },
         "data/mapb.tmx": {
             "scale": 0.5,
             "selectedLayer": 1,
             "viewCenter": {
-                "x": 668,
-                "y": 361
+                "x": 661,
+                "y": 369
             }
+        },
+        "data/purple-road.tsx": {
+            "scaleInDock": 0.12,
+            "scaleInEditor": 1
+        },
+        "data/tile_set.tsx": {
+            "scaleInDock": 0.75,
+            "scaleInEditor": 1
         },
         "data/tmw_desert_spacing.tsx": {
             "dynamicWrapping": false,
@@ -29,20 +47,24 @@
         }
     },
     "last.exportedFilePath": "//wsl.localhost/Ubuntu/home/bus-attack/bluebus/assets/levels",
-    "last.imagePath": "//wsl.localhost/Ubuntu/home/bus-attack/data/kenney_tower-defense-top-down/Tilesheet",
+    "last.imagePath": "//wsl.localhost/Ubuntu/home/bus-attack/bluebus/assets/images",
     "map.height": 18,
     "map.lastUsedExportFilter": "JSON map files (*.tmj *.json)",
     "map.lastUsedFormat": "tmx",
     "map.tileHeight": 50,
     "map.tileWidth": 50,
     "openFiles": [
-        "data/mapb.tmx",
-        "data/towerDefense_tilesheet.tsx"
+        "data/map.tmx",
+        "data/tile_set.tsx",
+        "data/mapb.tmx"
     ],
     "project": "blue_bus.tiled-project",
     "recentFiles": [
-        "data/towerDefense_tilesheet.tsx",
+        "data/purple-road.tsx",
+        "data/tile_set.tsx",
         "data/mapb.tmx",
+        "data/map.tmx",
+        "data/towerDefense_tilesheet.tsx",
         "data/tmw_desert_spacing.tsx"
     ],
     "tileset.lastUsedFormat": "tsx",
