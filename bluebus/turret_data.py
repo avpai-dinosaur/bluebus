@@ -5,6 +5,12 @@ T_EMO = "emo"
 
 TURRET_DATA = {
     "nerd" : {
+        "description" : ("English Major\n"
+                         "---------------\n"
+                         "Throws books they\n"
+                         "don't like.\n"
+                         "\n"
+                         "Cost: 250"),
         "bullet-img" : "book.png",
         "bullet-speed" : 5,
         "anim-delay" : 50,
@@ -31,6 +37,13 @@ TURRET_DATA = {
         ]
     },
     "jock" : {
+        "description" : ("Rabid Sport Fan\n"
+                         "---------------\n"
+                         "Long range throws\n"
+                         "but slow from\n"
+                         "inebriation.\n"
+                         "\n"
+                         "Cost: 400"),
         "bullet-img" : "football.png",
         "bullet-speed" : 10,
         "anim-delay" : 50,
@@ -58,13 +71,19 @@ TURRET_DATA = {
     },
     "emo" : {},
     "schlissel" : {
+        "description" : ("Schlissel\n"
+                         "---------------\n"
+                         "lonely\n"
+                         "-m\n"
+                         "\n"
+                         "Cost: 1000"),
         "bullet-img" : "lonely.png",
         "bullet-speed" : 10,
         "anim-delay" : 50,
         "upgrades" : [
             # Level 1
             {
-                "cost" : 4000,
+                "cost" : 1000,
                 "damage" : 1,
                 "range" : 400,
                 "cooldown" : 200

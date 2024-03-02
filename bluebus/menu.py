@@ -85,7 +85,8 @@ class Menu():
         surface.blit(img, pos)
 
     def draw_tower_info(self, surface, type, font, color, pos):
-        self.draw_text(surface, str(type), font, color, pos)
+        tower_description = turret_data.TURRET_DATA[type]["description"]
+        self.draw_text(surface, tower_description, font, color, pos)
 
     def draw(self, surface):
         surface.blit(self.image, self.rect)
@@ -95,4 +96,5 @@ class Menu():
         self.draw_text(surface, str(self.level), self.large_font, (0, 0, 0), 
                        (constants.SCREEN_WIDTH + 140, constants.HEADER_HEIGHT + 530))
         if self.hovered_button:
-            self.draw_tower_info(surface, self.hovered_button.type, self.text_font, (0, 0, 0), (constants.SCREEN_WIDTH + 10, constants.HEADER_HEIGHT + 210))
+            self.draw_tower_info(surface, self.hovered_button.type, self.text_font, (0, 0, 0), 
+                                 (constants.SCREEN_WIDTH + 10, constants.HEADER_HEIGHT + 210))
