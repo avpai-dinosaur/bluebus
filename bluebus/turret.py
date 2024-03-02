@@ -107,9 +107,10 @@ class Turret(pygame.sprite.Sprite):
             x_dist = enemy.pos[0] - self.pos[0]
             y_dist = enemy.pos[1] - self.pos[1]
             dist = math.sqrt(x_dist ** 2 + y_dist ** 2)
-            if dist < self.range:
+            if (dist < self.range) and (enemy.health > 0):
                 self.target = enemy
                 self.angle = math.degrees(math.atan2(-y_dist, x_dist))
+                break
 
     def shoot_target(self):
         new_bullet = Bullet(self.bullet_img_filename, self.pos, self.bullet_damage, self, self.target)

@@ -30,8 +30,6 @@ running = True
 while running:
     clock.tick(constants.FPS)
 
-    ###----------UPDATING SECTION----------###
-
     # poll for events
     # pygame.QUIT event means the user clicked X to close window
     for event in pygame.event.get():
@@ -41,16 +39,18 @@ while running:
             mouse_pos = pygame.mouse.get_pos()
             world.handle_mouse_click(mouse_pos)
     
-    if world.menu.running_level and world.level <= world.num_levels:
-        world.run_next_level()
-    world.update()
-
-    ###----------DRAW SECTION----------###
+    # check if game is over
+    if not world.game_over:
+        if world.menu.running_level and world.menu.level <= world.num_levels:
+            world.run_next_level()
+        world.update()
+        if world.menu.health <= 0:
+            world.game_over = True
+            world.game_outcome = -1
 
     # fill the screen with a color to wipe away anything from last frame
     screen.fill("grey100")
     world.draw(screen)
-    # map.draw_enemies_path()
     pygame.display.flip()
 
 pygame.quit()

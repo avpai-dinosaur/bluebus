@@ -15,8 +15,8 @@ class Menu():
         self.rect.topleft = self.pos
 
         # fonts
-        self.text_font = pygame.font.SysFont("Consolas", 24, bold=True)
-        self.large_font = pygame.font.SysFont("Comic Sans MS", 36, bold=False)
+        self.text_font = pygame.font.SysFont("Consolas", 20, bold=True)
+        self.large_font = pygame.font.SysFont("Consolas", 36, bold=False)
 
         # butons
         self.turret_buttons = self.load_turret_buttons()
@@ -33,6 +33,7 @@ class Menu():
         # Game info
         self.health = constants.HEALTH
         self.money = constants.MONEY
+        self.level = 1
 
     def load_turret_buttons(self):
         buttons = [Button(turret_data.T_NERD, (constants.SCREEN_WIDTH + 50, constants.HEADER_HEIGHT + 50)),
@@ -72,3 +73,5 @@ class Menu():
         self.draw_buttons(surface)
         self.draw_text(surface, str(self.health), self.text_font, (0, 0, 0), (constants.SCREEN_WIDTH + 50, 15))
         self.draw_text(surface, str(self.money), self.text_font, (0, 0, 0), (constants.SCREEN_WIDTH + 50, 60))
+        self.draw_text(surface, str(self.level), self.large_font, (0, 0, 0), 
+                       (constants.SCREEN_WIDTH + 140, constants.HEADER_HEIGHT + 530))

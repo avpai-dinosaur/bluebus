@@ -17,16 +17,25 @@ class World():
     """Top level class to keep track of all game objects."""
 
     def __init__(self, map):
+        # map stuff
         self.map = map
         self.menu = Menu("menu.png", (constants.SCREEN_WIDTH, 0))
-        self.level = 1
+        self.game_over_img, _ = resources.load_png("game-over.png")
+
+        # level info
         self.num_levels = len(enemy_data.ENEMY_SPAWN_DATA)
         self.spawned_enemies = 0
         self.bus_group = pygame.sprite.Group()
         self.turret_group = pygame.sprite.Group()
         self.bullet_group = pygame.sprite.Group()
-        self.selected_turret = None
         self.last_enemy_spawn = None
+
+        # state variables
+        self.selected_turret = None
+
+        # game info
+        self.game_over = False
+        self.game_outcome = 0
 
     def update(self):
         self.bus_group.update()
@@ -38,6 +47,8 @@ class World():
         self.bus_group.draw(surface)
         for turret in self.turret_group:
             turret.draw(surface)
+        if self.game_outcome == -1:
+            surface.blit(self.game_over_img, (constants.SCREEN_WIDTH / 4, constants.SCREEN_HEIGHT / 4))
     
     def handle_mouse_click(self, mouse_pos):
         if (mouse_pos[0] in range(0, constants.SCREEN_WIDTH) and 
@@ -70,13 +81,14 @@ class World():
         return enemies
 
     def run_next_level(self):
-        spawn_list = self.process_enemy_list(enemy_data.ENEMY_SPAWN_DATA[self.level - 1])
+        spawn_list = self.process_enemy_list(enemy_data.ENEMY_SPAWN_DATA[self.menu.level - 1])
         num_enemies = len(spawn_list)
         if self.spawned_enemies >= num_enemies:
             if len(self.bus_group.sprites()) == 0:
                 self.menu.running_level = False
                 self.spawned_enemies = 0
-                self.level += 1
+                self.menu.money += 100 + 20 * (self.menu.level - 1)
+                self.menu.level += 1
         else:
             self.spawn_enemy(spawn_list[self.spawned_enemies])
 
