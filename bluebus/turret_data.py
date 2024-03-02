@@ -19,8 +19,8 @@ TURRET_DATA = {
             {
                 "cost" : 250,
                 "damage" : 1,
-                "range" : 150,
-                "cooldown" : 1500
+                "range" : 250,
+                "cooldown" : 1200
             },
             # Level 2
             {
@@ -45,15 +45,15 @@ TURRET_DATA = {
                          "\n"
                          "Cost: 400"),
         "bullet-img" : "football.png",
-        "bullet-speed" : 10,
+        "bullet-speed" : 15,
         "anim-delay" : 50,
         "upgrades" : [
             # Level 1
             {
                 "cost" : 400,
                 "damage" : 5,
-                "range" : 250,
-                "cooldown" : 2000
+                "range" : 400,
+                "cooldown" : 5000
             },
             # Level 2
             {
@@ -85,7 +85,7 @@ TURRET_DATA = {
             {
                 "cost" : 1000,
                 "damage" : 1,
-                "range" : 400,
+                "range" : 600,
                 "cooldown" : 200
             },
             # Level 2

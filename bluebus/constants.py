@@ -4,7 +4,7 @@ ROWS = 18
 COLS = 30
 
 # Gameplay constants
-HEALTH = 1
+HEALTH = 100
 MONEY = 650
 
 # Menu Constants
@@ -21,7 +21,7 @@ FPS = 60
 
 # Turret constants
 ANIMATION_STEPS = 8
-ANIMATION_DELAY = 200
+ANIMATION_DELAY = 250
 TURRET_ANGLE_OFFSET = 270
 
 # Enemy constants
