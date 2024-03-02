@@ -4,20 +4,20 @@ B_STRONG = "strong"
 
 ENEMY_DATA = {
     B_WEAK : {
-        "img" : "bus.png",
+        "img" : "bluebus.png",
         "speed" : 2,
         "health" : 5,
         "anim-delay" : 50
     },
     B_MED : {
-        "img" : "bus2.png",
+        "img" : "orangebus.png",
         "speed" : 3,
         "health" : 7,
         "anim-delay" : 50
     },
     B_STRONG : {
-        "img" : "bus3.png",
-        "speed" : 2,
+        "img" : "redbus.png",
+        "speed" : 4,
         "health" : 15,
         "anim-delay" : 50
     }
@@ -26,19 +26,19 @@ ENEMY_DATA = {
 ENEMY_SPAWN_DATA = [
     {
         #1
-        B_WEAK: 5,
+        B_WEAK: 2,
         B_MED: 0,
         B_STRONG: 0,
     },
     {
         #2
-        B_WEAK: 10,
+        B_WEAK: 5,
         B_MED: 0,
         B_STRONG: 0,
     },
     {
         #3
-        B_WEAK: 0,
+        B_WEAK: 5,
         B_MED: 5,
         B_STRONG: 0,
     },
