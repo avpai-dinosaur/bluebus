@@ -38,6 +38,21 @@ class World():
         self.game_over = False
         self.game_outcome = 0
 
+    def reset(self):
+        self.menu = Menu("menu.png", (constants.SCREEN_WIDTH, 0))
+        self.spawned_enemies = 0
+        self.bus_group = pygame.sprite.Group()
+        self.turret_group = pygame.sprite.Group()
+        self.bullet_group = pygame.sprite.Group()
+        self.last_enemy_spawn = None
+
+        # state variables
+        self.selected_turret = None
+
+        # game info
+        self.game_over = False
+        self.game_outcome = 0
+
     def update(self):
         self.bus_group.update()
         self.turret_group.update(self.bus_group)
@@ -45,6 +60,10 @@ class World():
     def draw(self, surface):
         surface.blit(self.map.image, (0, 0))
         self.menu.draw(surface)
+        if self.game_over:
+            if self.menu.restart_button.draw(surface):
+                print("restart game")
+                self.reset()
         self.bus_group.draw(surface)
         for turret in self.turret_group:
             turret.draw(surface)

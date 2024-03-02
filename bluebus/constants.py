@@ -26,3 +26,8 @@ TURRET_ANGLE_OFFSET = 270
 
 # Enemy constants
 SPAWN_COOLDOWN = 2500
+
+# Button constants
+B_CANCEL = "cancel"
+B_START = "start-level"
+B_RESTART = "restart"

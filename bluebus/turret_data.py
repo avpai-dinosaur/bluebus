@@ -2,8 +2,6 @@ T_NERD = "nerd"
 T_JOCK = "jock"
 T_SCHLISSEL = "schlissel"
 T_EMO = "emo"
-T_CANCEL = "cancel"
-T_START = "start-level"
 
 TURRET_DATA = {
     "nerd" : {

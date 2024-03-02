@@ -20,10 +20,12 @@ class Menu():
 
         # butons
         self.turret_buttons = self.load_turret_buttons()
-        self.start_level_button = Button(turret_data.T_START, 
+        self.start_level_button = Button(constants.B_START, 
                                          (constants.SCREEN_WIDTH + 50, constants.HEADER_HEIGHT + 550))
-        self.cancel_button = Button(turret_data.T_CANCEL, 
+        self.cancel_button = Button(constants.B_CANCEL, 
                                     (constants.SCREEN_WIDTH + constants.SIDE_PANEL / 2, constants.SCREEN_HEIGHT / 2))
+        self.restart_button = Button(constants.B_RESTART, 
+                                     (constants.SCREEN_WIDTH + constants.SIDE_PANEL / 2, constants.SCREEN_HEIGHT / 2))
         
         # State variables
         self.placing_turrets = False
@@ -40,9 +42,6 @@ class Menu():
                    Button(turret_data.T_JOCK, (constants.SCREEN_WIDTH + 150, constants.HEADER_HEIGHT + 50)),
                    Button(turret_data.T_SCHLISSEL, (constants.SCREEN_WIDTH + 250, constants.HEADER_HEIGHT + 50))]
         return buttons
-
-    def add_button(self, button):
-        self.buttons.append(button)
 
     def draw_buttons(self, surface):
         if self.placing_turrets:
